@@ -1,14 +1,17 @@
 {
-  "name": "bookstore-api-er2",
+  "name": "bookstore-er",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "migrate": "npx sequelize db:migrate --migrations-path database/migrations/ --config config/database.js",
+    "revert": "npx sequelize db:migrate:undo:all --migrations-path database/migrations/ --config config/database.js"
   },
   "dependencies": {
     "config": "^3.3.9",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^16.3.1",
     "express": "~4.16.1",
     "morgan": "~1.9.1",
     "pg": "^8.11.1",
