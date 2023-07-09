@@ -1,8 +1,15 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var passport = require('passport')
 
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+var auth = require('../app/Middleware/auth')
+var usersController = require('../app/Controllers/user')
+
+var router = express.Router()
+
+router.post('/login', passport.authenticate('local', {session: false}), usersController.login)
+
+router.post('/logout', auth.verifyUser, usersController.logout)
+
+router.post('/add', usersController.add)
 
 module.exports = router;
