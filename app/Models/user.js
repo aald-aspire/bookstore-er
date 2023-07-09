@@ -1,4 +1,5 @@
 const { Model } = require('sequelize')
+const passportLocalSequelize = require('passport-local-sequelize')
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -20,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4
     },
     name: {
-	    type: DataTypes.STRING,
-	    allowNull: false,
+      type: DataTypes.STRING,
+      allowNull: false,
       unique: true
     },
     email: {
@@ -29,7 +30,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true
     },
-    password: {
+    hash: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    salt: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -45,6 +50,10 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User'
   });
+
+  passportLocalSequelize.attachToUser(User, {
+    usernameField: 'email',
+  })
 
   return User;
 };

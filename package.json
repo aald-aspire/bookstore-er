@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "migrate": "npx sequelize db:migrate --migrations-path database/migrations/ --config config/database.js",
-    "revert": "npx sequelize db:migrate:undo:all --migrations-path database/migrations/ --config config/database.js"
+    "test": "jest ./tests/",
+    "migrate": "sequelize db:migrate --migrations-path database/migrations/ --config config/database.js",
+    "revert": "sequelize db:migrate:undo:all --migrations-path database/migrations/ --config config/database.js"
   },
   "dependencies": {
     "config": "^3.3.9",
@@ -13,7 +14,13 @@
     "debug": "~2.6.9",
     "dotenv": "^16.3.1",
     "express": "~4.16.1",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.1",
     "morgan": "~1.9.1",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "passport-local-sequelize": "^0.9.1",
     "pg": "^8.11.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.32.1",
