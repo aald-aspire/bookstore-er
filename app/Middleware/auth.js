@@ -33,7 +33,7 @@ const jwtPassport = passport.use(new JwtStrategy(opts,
 const verifyToken = asyncHandler(async (req, res, next) => {
 	const extractBearerToken = ExtractJwt.fromAuthHeaderAsBearerToken()
 
-	const apiToken = ApiToken.findOne({token: extractBearerToken(req)})
+	const apiToken = await ApiToken.findOne({token: extractBearerToken(req)})
 
 	if(apiToken) {
 		if(!apiToken.valid) {
@@ -42,14 +42,14 @@ const verifyToken = asyncHandler(async (req, res, next) => {
 
 		const tick = Math.floor( Date.now() / 1000 )
 
-		const tokenExpiresAt = Date.parse()
+		const tokenExpiresAt = Date.parse(apiToken.expiresAt).valueOf() / 1000
 
-		if(!apiToken.createdAt) {
-
+		if(tokenExpiresAt < tick) {
+			return next(new Error('Token has expired'))
 		}
-	} else {
-		return next()
 	}
+
+	return next()
 })
 
 const verifyUser = passport.authenticate('jwt', {session: false})
