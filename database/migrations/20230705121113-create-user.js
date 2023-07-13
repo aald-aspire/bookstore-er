@@ -17,7 +17,11 @@ module.exports = {
         allowNull: false,
         unique: true
       },
-      password: {
+      hash: {
+        type: Sequelize.TEXT,
+        allowNull: false
+      },
+      salt: {
         type: Sequelize.STRING,
         allowNull: false
       },
